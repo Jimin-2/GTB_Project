@@ -28,10 +28,12 @@ app.use(express.static('public'));
 io.on('connection', (socket) => {
     console.log('a user connected');
 
-    socket.on('chat message', async (msg, targetLang) => {
+    socket.on('chat message', async (data) => {
+        const { message, targetLang, nickname } = data;
+
         try {
-            const translation = await translator.translateText(msg, null, targetLang);
-            io.emit('chat message', translation.text);
+            const translation = await translator.translateText(message, null, targetLang);
+            io.emit('chat message', { translation: translation.text, original: message, senderNickname: nickname });
         } catch (error) {
             console.error(error);
         }
