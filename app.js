@@ -9,31 +9,40 @@ const translator = new deepl.Translator(authKey);
 })();*/
 
 const express = require('express');
+const http = require('http');
+const socketIO = require('socket.io');
 const deepl = require('deepl-node');
 const dotenv = require('dotenv');
+
 const app = express();
-const port = 3000;
+const server = http.createServer(app);
+const io = socketIO(server);
 
 require("dotenv").config();
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
-
-const authKey =process.env.DEEPL_API_KEY; // Replace with your key
+const authKey = process.env.DEEPL_API_KEY; // Replace with your key
 const translator = new deepl.Translator(authKey);
 
-app.post('/translate', async (req, res) => {
-    const { text, targetLang } = req.body;
+app.use(express.static('public'));
 
-    try {
-        const result = await translator.translateText(text, null, targetLang);
-        res.send(result.text); // Sending translation result to the client
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Translation failed');
-    }
+io.on('connection', (socket) => {
+    console.log('a user connected');
+
+    socket.on('chat message', async (msg, targetLang) => {
+        try {
+            const translation = await translator.translateText(msg, null, targetLang);
+            io.emit('chat message', translation.text);
+        } catch (error) {
+            console.error(error);
+        }
+    });
+
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
 });
 
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+server.listen(3000, () => {
+    console.log('Server is running on port 3000');
 });
+
