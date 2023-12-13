@@ -1,0 +1,83 @@
+/* styles.css */
+/* 전체 페이지 스타일링 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+}
+
+/* 메인 컨테이너 */
+.main-container {
+    text-align: center;
+    margin-top: 15vh;
+}
+
+/* 헤더 스타일 */
+h1 {
+    font-size: 3em;
+    color: #333;
+    margin-bottom: 20px;
+    margin-top: -10px;
+}
+
+img {
+    margin-right: 20px;
+}
+/* 폼 스타일 */
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input[type="text"] {
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+button[type="submit"] {
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    margin-top:-20px;
+    top:0px;
+    width: 100%;
+
+}
+
+header img {
+    height: 50px;
+    width: 50px;
+    vertical-align: middle;
+}
+
+header h3 {
+    color: white;
+}
+footer {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 3px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
